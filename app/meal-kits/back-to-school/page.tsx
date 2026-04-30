@@ -36,7 +36,7 @@ const mealKits = [
     price: "$12.99",
     imageUrl:
       "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80",
-    imageAlt: "Taco Tuesday Kit — colourful tacos on a wooden board",
+    imageAlt: "Taco Tuesday Kit — colorful tacos on a wooden board",
     badge: "Family Favourite",
   },
   {
@@ -66,7 +66,7 @@ const mealKits = [
     price: "$11.99",
     imageUrl:
       "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80",
-    imageAlt: "Quick Stir-Fry Kit — colourful vegetable stir-fry in a wok",
+    imageAlt: "Quick Stir-Fry Kit — colorful vegetable stir-fry in a wok",
   },
 ];
 
