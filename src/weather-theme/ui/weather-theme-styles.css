@@ -1,0 +1,244 @@
+/**
+ * Weather Theme Toggle - Styles
+ *
+ * Accessible, responsive styles for the weather theme toggle component.
+ * Uses the 'wt-' class prefix to avoid conflicts.
+ */
+
+/* --- Toggle Wrapper --- */
+.wt-toggle-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--wt-task-bg, #ffffff);
+  border: 1px solid var(--wt-border, #e0e0e0);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  color: var(--wt-text-primary, #1a1a1a);
+  max-width: 360px;
+}
+
+/* --- Toggle Row --- */
+.wt-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.wt-toggle-label {
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* --- Toggle Switch --- */
+.wt-toggle-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 14px;
+  padding: 0;
+  background: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wt-toggle-switch:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+  border-radius: 14px;
+}
+
+.wt-toggle-track {
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  background: #b0b0b0;
+  border-radius: 12px;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.wt-toggle-switch[aria-checked='true'] .wt-toggle-track {
+  background: #0065ff;
+}
+
+.wt-toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: #ffffff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.wt-toggle-switch[aria-checked='true'] .wt-toggle-thumb {
+  transform: translateX(20px);
+}
+
+/* --- Status Row --- */
+.wt-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 24px;
+  flex-wrap: wrap;
+}
+
+.wt-weather-icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.wt-weather-label {
+  font-size: 13px;
+  color: var(--wt-text-secondary, #666666);
+}
+
+.wt-status-message {
+  font-size: 12px;
+  color: #8b6914;
+  font-style: italic;
+  margin-left: auto;
+}
+
+/* --- Location Row --- */
+.wt-location-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+  border-top: 1px solid var(--wt-border, #e0e0e0);
+}
+
+.wt-location-label {
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.wt-location-input {
+  flex: 1;
+  padding: 4px 8px;
+  border: 1px solid var(--wt-border, #ccc);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--wt-text-primary, #1a1a1a);
+  background: #ffffff;
+  outline: none;
+  min-width: 0;
+}
+
+.wt-location-input:focus {
+  border-color: #0065ff;
+  box-shadow: 0 0 0 2px rgba(0, 101, 255, 0.2);
+}
+
+.wt-location-button {
+  padding: 4px 12px;
+  border: 1px solid #0065ff;
+  border-radius: 4px;
+  background: #0065ff;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: none;
+}
+
+.wt-location-button:hover {
+  background: #0050cc;
+}
+
+.wt-location-button:focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}
+
+/* --- Override Info --- */
+.wt-override-info {
+  font-size: 12px;
+  color: var(--wt-text-secondary, #666);
+  padding-top: 4px;
+}
+
+/* --- Task Card Theme Application --- */
+/* 
+  These styles show how to apply weather theme colors to task cards.
+  Use these CSS custom properties in your task card styles:
+*/
+
+[data-weather-theme] .task-card {
+  background-color: var(--wt-task-bg);
+  border-color: var(--wt-border);
+  color: var(--wt-text-primary);
+}
+
+[data-weather-theme] .task-card:hover {
+  background-color: var(--wt-task-bg-alt);
+}
+
+[data-weather-theme] .task-card .task-title {
+  color: var(--wt-text-primary);
+}
+
+[data-weather-theme] .task-card .task-meta {
+  color: var(--wt-text-secondary);
+}
+
+[data-weather-theme] .task-card .task-badge {
+  background-color: var(--wt-badge-bg);
+  color: var(--wt-badge-text);
+}
+
+/* Non-color weather indicator (always visible when theme is active) */
+[data-weather-theme]::after {
+  content: attr(data-weather-icon) ' ' attr(data-weather-label);
+  position: fixed;
+  bottom: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 12px;
+  color: var(--wt-text-secondary, #666);
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* --- Reduced Motion --- */
+@media (prefers-reduced-motion: reduce) {
+  .wt-toggle-thumb,
+  .wt-toggle-track {
+    transition: none;
+  }
+}
+
+/* --- High Contrast Mode --- */
+@media (forced-colors: active) {
+  .wt-toggle-track {
+    border: 1px solid ButtonText;
+  }
+
+  .wt-toggle-switch[aria-checked='true'] .wt-toggle-track {
+    background: Highlight;
+  }
+
+  .wt-toggle-thumb {
+    background: ButtonText;
+  }
+
+  .wt-location-input {
+    border: 1px solid ButtonText;
+  }
+}
