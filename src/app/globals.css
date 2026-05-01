@@ -1,0 +1,783 @@
+/* ==========================================================================
+   Weather-Based Theme Toggle - Global Styles
+   All color palettes are WCAG AA compliant and color-blind safe.
+   ========================================================================== */
+
+/* --- Reset & Base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  line-height: 1.6;
+  color: #1a1a2e;
+  background-color: #f5f6fa;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: #0052cc;
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+a:focus-visible {
+  outline: 2px solid #0052cc;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Screen-reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Weather Page Layout --- */
+.weather-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-page__header {
+  background: linear-gradient(135deg, #0052cc 0%, #2684ff 100%);
+  color: #fff;
+  padding: 2.5rem 2rem;
+}
+
+.weather-page__header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.weather-page__title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.weather-page__subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  max-width: 600px;
+}
+
+.weather-page__main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  grid-template-rows: auto auto;
+  gap: 1.5rem;
+}
+
+.weather-page__settings {
+  grid-column: 1;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.weather-page__content {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.weather-page__gallery {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}
+
+.weather-page__card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.weather-page__footer {
+  margin-top: auto;
+  padding: 1.5rem 2rem;
+  text-align: center;
+  color: #666;
+  font-size: 0.85rem;
+  border-top: 1px solid #e4e7ec;
+}
+
+@media (max-width: 900px) {
+  .weather-page__main {
+    grid-template-columns: 1fr;
+  }
+  .weather-page__settings {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .weather-page__content {
+    grid-column: 1;
+    grid-row: auto;
+  }
+  .weather-page__gallery {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+/* --- Toggle Switch --- */
+.weather-toggle__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.weather-toggle__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.25rem;
+}
+
+.weather-toggle__description {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+.weather-toggle__switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.weather-toggle__switch input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.weather-toggle__slider {
+  width: 48px;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 26px;
+  transition: background-color 0.2s ease;
+  position: relative;
+}
+
+.weather-toggle__slider::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.weather-toggle__switch input:checked + .weather-toggle__slider {
+  background-color: #0052cc;
+}
+
+.weather-toggle__switch input:checked + .weather-toggle__slider::after {
+  transform: translateX(22px);
+}
+
+.weather-toggle__switch input:focus-visible + .weather-toggle__slider {
+  outline: 2px solid #0052cc;
+  outline-offset: 2px;
+}
+
+.weather-toggle__state-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+  min-width: 24px;
+}
+
+.weather-toggle__status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: #f0f7ff;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.weather-toggle__icon {
+  font-size: 1.2rem;
+}
+
+.weather-toggle__condition {
+  font-weight: 500;
+}
+
+.weather-toggle__loading {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+.weather-toggle__error {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  background: #fff3e0;
+  border: 1px solid #ffcc80;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #5c3d00;
+}
+
+/* --- Location Settings --- */
+.location-settings {
+  margin-top: 1rem;
+}
+
+.location-settings__current {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding: 0.5rem 0;
+  font-size: 0.9rem;
+}
+
+.location-settings__label {
+  font-weight: 500;
+}
+
+.location-settings__temp {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.location-settings__change-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: #0052cc;
+  margin-left: auto;
+}
+.location-settings__change-btn:hover {
+  background: #f0f7ff;
+}
+
+.location-settings__setup {
+  padding-top: 0.5rem;
+}
+
+.location-settings__prompt {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.location-settings__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.location-settings__geo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: #0052cc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.location-settings__geo-btn:hover { background: #003d99; }
+.location-settings__geo-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.location-settings__geo-btn:focus-visible {
+  outline: 2px solid #0052cc;
+  outline-offset: 2px;
+}
+
+.location-settings__denied {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.6rem;
+  background: #fff3e0;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: #5c3d00;
+}
+
+.location-settings__manual {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.location-settings__divider {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+.location-settings__form {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.location-settings__input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+.location-settings__input:focus {
+  outline: none;
+  border-color: #0052cc;
+  box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2);
+}
+
+.location-settings__submit-btn {
+  padding: 0.5rem 1rem;
+  background: #0052cc;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.location-settings__submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.location-settings__submit-btn:hover:not(:disabled) { background: #003d99; }
+
+.location-settings__status {
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* --- Project Overrides --- */
+.project-overrides__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+.project-overrides__header:focus-visible {
+  outline: 2px solid #0052cc;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.project-overrides__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.project-overrides__chevron {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.project-overrides__description {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0.5rem 0;
+}
+
+.project-overrides__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.project-overrides__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  background: #f7f8fa;
+  border-radius: 6px;
+  gap: 0.75rem;
+}
+
+.project-overrides__project-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.project-overrides__project-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1a1a2e;
+}
+
+.project-overrides__board-name {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.project-overrides__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.project-overrides__select {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  background: #fff;
+}
+.project-overrides__select:focus {
+  outline: none;
+  border-color: #0052cc;
+  box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2);
+}
+
+.project-overrides__status {
+  font-size: 0.75rem;
+  color: #999;
+  white-space: nowrap;
+}
+
+.project-overrides__status--active {
+  color: #0052cc;
+  font-weight: 600;
+}
+
+/* --- Task View --- */
+.task-view {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.3s ease;
+}
+
+.task-view__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.task-view__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.task-view__weather-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(0, 82, 204, 0.08);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: #0052cc;
+  font-weight: 500;
+}
+
+.task-view__temp {
+  color: #666;
+  font-weight: 400;
+  font-size: 0.8rem;
+}
+
+.task-view__error-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  background: #fff3e0;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #5c3d00;
+}
+
+.task-view__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.task-card {
+  padding: 0.85rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.task-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.task-card__top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.task-card__title {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.task-card__weather-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.task-card__weather-label {
+  font-size: 0.65rem;
+}
+
+.task-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 0.8rem;
+}
+
+.task-card__status,
+.task-card__priority,
+.task-card__assignee {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* --- Theme Preview Gallery --- */
+.theme-preview {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.theme-preview__title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.25rem;
+}
+
+.theme-preview__subtitle {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.theme-preview__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.theme-preview__card {
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 1rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.theme-preview__card--active {
+  border-width: 2px;
+  border-style: solid;
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.theme-preview__card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.theme-preview__icon {
+  font-size: 1.3rem;
+}
+
+.theme-preview__label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.theme-preview__active-badge {
+  margin-left: auto;
+  padding: 0.1rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.theme-preview__colors {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.theme-preview__swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.theme-preview__sample-task {
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.theme-preview__sample-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: 8px;
+  font-size: 0.65rem;
+  font-weight: 500;
+  margin-top: 0.2rem;
+}
+
+/* --- Privacy Info --- */
+.privacy-info__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+}
+.privacy-info__header:focus-visible {
+  outline: 2px solid #0052cc;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.privacy-info__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.privacy-info__chevron {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.privacy-info__content {
+  margin-top: 1rem;
+}
+
+.privacy-info__section {
+  margin-bottom: 1.25rem;
+}
+
+.privacy-info__section h5 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  margin-bottom: 0.4rem;
+}
+
+.privacy-info__section ul {
+  padding-left: 1.25rem;
+  font-size: 0.85rem;
+  color: #444;
+}
+
+.privacy-info__section li {
+  margin-bottom: 0.35rem;
+}
+
+.privacy-info__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 0.25rem;
+}
+
+.privacy-info__table th,
+.privacy-info__table td {
+  text-align: left;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid #e4e7ec;
+}
+
+.privacy-info__table th {
+  background: #f7f8fa;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.privacy-info__table td {
+  color: #444;
+}
