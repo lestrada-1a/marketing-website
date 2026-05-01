@@ -1,0 +1,100 @@
+/**
+ * Theme-specific Styles
+ *
+ * Additional visual treatments applied per weather theme.
+ * These styles use the data-theme attribute set on <body> to provide
+ * theme-specific decorations beyond the CSS custom properties.
+ */
+
+/* ============================================
+   Theme-specific body backgrounds
+   ============================================ */
+body[data-theme="clear"] {
+  background: linear-gradient(180deg, #FFFBEB 0%, #FEF3C7 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="cloudy"] {
+  background: linear-gradient(180deg, #F9FAFB 0%, #F3F4F6 50%, #E5E7EB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="foggy"] {
+  background: linear-gradient(180deg, #FAFAF9 0%, #F5F5F4 50%, #E7E5E4 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="rainy"] {
+  background: linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="snowy"] {
+  background: linear-gradient(180deg, #F0FDFA 0%, #ECFEFF 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="stormy"] {
+  background: linear-gradient(180deg, #F5F3FF 0%, #EDE9FE 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="extreme_heat"] {
+  background: linear-gradient(180deg, #FEF2F2 0%, #FEE2E2 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="extreme_cold"] {
+  background: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="windy"] {
+  background: linear-gradient(180deg, #F0FDFA 0%, #CCFBF1 50%, #F9FAFB 100%);
+  background-attachment: fixed;
+}
+
+body[data-theme="default"] {
+  background: #F9FAFB;
+}
+
+/* ============================================
+   Theme-specific header accents
+   ============================================ */
+body[data-theme="clear"] .app-header {
+  border-bottom-color: #F59E0B;
+}
+
+body[data-theme="rainy"] .app-header {
+  border-bottom-color: #60A5FA;
+}
+
+body[data-theme="stormy"] .app-header {
+  border-bottom-color: #A78BFA;
+}
+
+body[data-theme="snowy"] .app-header {
+  border-bottom-color: #67E8F9;
+}
+
+body[data-theme="extreme_heat"] .app-header {
+  border-bottom-color: #F87171;
+}
+
+body[data-theme="extreme_cold"] .app-header {
+  border-bottom-color: #7DD3FC;
+}
+
+/* ============================================
+   Theme indicator dot on weather status
+   ============================================ */
+.weather-status::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--theme-primary);
+  margin-right: 4px;
+  flex-shrink: 0;
+}
