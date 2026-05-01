@@ -1,0 +1,812 @@
+/**
+ * Main Styles
+ * Core layout and component styles for the weather-based theme toggle feature.
+ */
+
+/* ============================================
+   CSS Custom Properties (Default Theme)
+   ============================================ */
+:root {
+  --theme-primary: #4F46E5;
+  --theme-primary-light: #EEF2FF;
+  --theme-primary-dark: #3730A3;
+  --theme-card-bg: #FFFFFF;
+  --theme-card-border: #E5E7EB;
+  --theme-text-primary: #111827;
+  --theme-text-secondary: #6B7280;
+  --theme-header-bg: #F3F4F6;
+
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --transition-speed: 0.3s;
+}
+
+/* ============================================
+   Theme Transition
+   ============================================ */
+.theme-transitioning,
+.theme-transitioning * {
+  transition: background-color 0.5s ease, border-color 0.5s ease, color 0.3s ease !important;
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--theme-text-primary);
+  background-color: #F9FAFB;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: white;
+  border-bottom: 1px solid var(--theme-card-border);
+  box-shadow: var(--shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--theme-text-primary);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.weather-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ============================================
+   Weather Status Indicator
+   ============================================ */
+.weather-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: var(--theme-primary-light);
+  border: 1px solid var(--theme-card-border);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  color: var(--theme-primary-dark);
+  font-weight: 500;
+}
+
+.weather-icon {
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   Toggle Switch
+   ============================================ */
+.toggle-switch {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.toggle-switch input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background-color: #CBD5E1;
+  border-radius: 12px;
+  transition: background-color var(--transition-speed);
+  flex-shrink: 0;
+}
+
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-speed);
+}
+
+input[type="checkbox"]:checked + .toggle-slider {
+  background-color: var(--theme-primary);
+}
+
+input[type="checkbox"]:checked + .toggle-slider::after {
+  transform: translateX(20px);
+}
+
+input[type="checkbox"]:focus-visible + .toggle-slider {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+.toggle-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--theme-text-primary);
+  white-space: nowrap;
+}
+
+.toggle-switch-small .toggle-slider {
+  width: 36px;
+  height: 20px;
+}
+
+.toggle-switch-small .toggle-slider::after {
+  width: 16px;
+  height: 16px;
+}
+
+.toggle-switch-small input[type="checkbox"]:checked + .toggle-slider::after {
+  transform: translateX(16px);
+}
+
+/* ============================================
+   Settings Button
+   ============================================ */
+.settings-btn {
+  background: none;
+  border: 1px solid var(--theme-card-border);
+  border-radius: var(--border-radius);
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: background-color var(--transition-speed), border-color var(--transition-speed);
+}
+
+.settings-btn:hover {
+  background: var(--theme-primary-light);
+  border-color: var(--theme-primary);
+}
+
+.settings-btn:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   Settings Panel (Slide-out)
+   ============================================ */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+}
+
+.settings-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  max-width: 100vw;
+  height: 100vh;
+  background: white;
+  box-shadow: var(--shadow-lg);
+  z-index: 201;
+  overflow-y: auto;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+.settings-panel-inner {
+  padding: 24px;
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.settings-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--theme-text-secondary);
+  padding: 4px 8px;
+  border-radius: var(--border-radius-sm);
+}
+
+.close-btn:hover {
+  background: #F3F4F6;
+}
+
+.close-btn:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+.settings-section {
+  margin-bottom: 28px;
+}
+
+.settings-section h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--theme-text-primary);
+}
+
+.settings-hint {
+  font-size: 0.8rem;
+  color: var(--theme-text-secondary);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Location Controls
+   ============================================ */
+.location-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.location-status {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+  border-radius: var(--border-radius-sm);
+  min-height: 1.5em;
+}
+
+.location-status-info { color: #2563EB; background: #EFF6FF; }
+.location-status-success { color: #059669; background: #ECFDF5; }
+.location-status-error { color: #DC2626; background: #FEF2F2; }
+
+.manual-location label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--theme-text-secondary);
+}
+
+.input-group {
+  display: flex;
+  gap: 8px;
+}
+
+.input-group input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  font-family: var(--font-family);
+}
+
+.input-group input:focus {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: -1px;
+  border-color: var(--theme-primary);
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+  padding: 8px 16px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-speed);
+  white-space: nowrap;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: 2px;
+}
+
+.btn-primary {
+  background: var(--theme-primary);
+  color: white;
+  border-color: var(--theme-primary);
+}
+
+.btn-primary:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--theme-text-primary);
+  border-color: #D1D5DB;
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #F9FAFB;
+  border-color: var(--theme-primary);
+}
+
+.btn-danger {
+  background: #FEF2F2;
+  color: #DC2626;
+  border-color: #FECACA;
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: #FEE2E2;
+}
+
+.btn-text {
+  background: none;
+  border: none;
+  color: var(--theme-primary);
+  padding: 4px 8px;
+  font-size: 0.8rem;
+}
+
+.btn-text:hover {
+  text-decoration: underline;
+}
+
+/* ============================================
+   Weather Preview
+   ============================================ */
+.weather-preview .no-data {
+  color: var(--theme-text-secondary);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.weather-preview-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: var(--theme-primary-light);
+  border: 1px solid var(--theme-card-border);
+  border-radius: var(--border-radius);
+}
+
+.weather-preview-icon {
+  font-size: 2.5rem;
+}
+
+.weather-preview-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.weather-preview-condition {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.weather-preview-temp {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--theme-primary-dark);
+}
+
+.weather-preview-wind,
+.weather-preview-location {
+  font-size: 0.8rem;
+  color: var(--theme-text-secondary);
+}
+
+.stale-warning {
+  font-size: 0.8rem;
+  color: #92400E;
+  background: #FEF3C7;
+  padding: 8px 12px;
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 12px;
+}
+
+/* ============================================
+   Theme Mapping Grid
+   ============================================ */
+.theme-mapping-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.theme-mapping-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: #FAFAFA;
+  border-radius: var(--border-radius-sm);
+}
+
+.theme-mapping-icon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.theme-mapping-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-mapping-info strong {
+  font-size: 0.85rem;
+}
+
+.theme-mapping-desc {
+  font-size: 0.75rem;
+  color: var(--theme-text-secondary);
+}
+
+.theme-mapping-swatch {
+  width: 40px;
+  height: 28px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   Project Overrides
+   ============================================ */
+.project-override-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.project-override-item:last-child {
+  border-bottom: none;
+}
+
+.override-hint {
+  font-size: 0.75rem;
+  color: var(--theme-text-secondary);
+  font-weight: 400;
+}
+
+/* ============================================
+   Privacy Info
+   ============================================ */
+.privacy-info ul {
+  list-style: none;
+  padding: 0;
+}
+
+.privacy-info li {
+  font-size: 0.82rem;
+  color: var(--theme-text-secondary);
+  padding: 4px 0;
+  padding-left: 16px;
+  position: relative;
+}
+
+.privacy-info li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--theme-primary);
+}
+
+.privacy-info .btn-danger {
+  margin-top: 12px;
+}
+
+/* ============================================
+   Status Banner
+   ============================================ */
+.status-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 24px;
+  font-size: 0.85rem;
+  border-bottom: 1px solid transparent;
+}
+
+.status-banner-info {
+  background: #EFF6FF;
+  color: #1E40AF;
+  border-color: #BFDBFE;
+}
+
+.status-banner-warning {
+  background: #FEF3C7;
+  color: #92400E;
+  border-color: #FDE68A;
+}
+
+.status-banner-error {
+  background: #FEF2F2;
+  color: #991B1B;
+  border-color: #FECACA;
+}
+
+.status-banner-success {
+  background: #ECFDF5;
+  color: #065F46;
+  border-color: #A7F3D0;
+}
+
+.status-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.7;
+  padding: 2px 6px;
+}
+
+.status-close:hover {
+  opacity: 1;
+}
+
+/* ============================================
+   Task View
+   ============================================ */
+.task-view {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.task-view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.task-view-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.task-view-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-view-controls label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--theme-text-secondary);
+}
+
+.task-view-controls select {
+  padding: 6px 10px;
+  border: 1px solid #D1D5DB;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  font-family: var(--font-family);
+  background: white;
+}
+
+.task-view-controls select:focus {
+  outline: 2px solid var(--theme-primary);
+  outline-offset: -1px;
+}
+
+/* ============================================
+   Task Board (Kanban)
+   ============================================ */
+.task-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .task-board {
+    grid-template-columns: 1fr;
+  }
+}
+
+.task-column {
+  background: var(--theme-header-bg);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  min-height: 200px;
+}
+
+.task-column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  background: var(--theme-header-bg);
+  border-bottom: 2px solid var(--theme-primary);
+}
+
+.task-column-header h3 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--theme-text-primary);
+}
+
+.task-count {
+  background: var(--theme-primary);
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.task-column-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ============================================
+   Task Cards
+   ============================================ */
+.task-card {
+  background: var(--theme-card-bg);
+  border: 1px solid var(--theme-card-border);
+  border-radius: var(--border-radius);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-speed), transform var(--transition-speed);
+}
+
+.task-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.task-card.weather-themed {
+  border-left: 4px solid var(--theme-primary);
+}
+
+.task-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.task-id {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--theme-primary);
+}
+
+.task-priority-badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+}
+
+.priority-high .task-priority-badge {
+  background: #FEE2E2;
+  color: #991B1B;
+}
+
+.priority-medium .task-priority-badge {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.priority-low .task-priority-badge {
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.task-title {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--theme-text-primary);
+  line-height: 1.4;
+}
+
+.task-card-footer {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #F3F4F6;
+}
+
+.task-project-label {
+  font-size: 0.75rem;
+  color: var(--theme-text-secondary);
+  font-weight: 500;
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 640px) {
+  .app-header {
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .weather-toggle-container {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .settings-panel {
+    width: 100vw;
+  }
+
+  .task-view {
+    padding: 16px;
+  }
+}

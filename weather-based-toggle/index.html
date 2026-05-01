@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather-Based Theme Toggle | Task View</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/themes.css" />
+  <link rel="stylesheet" href="css/accessibility.css" />
+</head>
+<body data-theme="default">
+  <header class="app-header">
+    <div class="header-left">
+      <h1>Task View</h1>
+    </div>
+    <div class="header-right">
+      <div class="weather-toggle-container" role="region" aria-label="Weather theme settings">
+        <!-- Weather status indicator -->
+        <div class="weather-status" id="weatherStatus" aria-live="polite" hidden>
+          <span class="weather-icon" id="weatherIcon" aria-hidden="true"></span>
+          <span class="weather-label" id="weatherLabel"></span>
+        </div>
+
+        <!-- Main toggle switch -->
+        <div class="toggle-switch-wrapper">
+          <label class="toggle-switch" for="weatherToggle">
+            <span class="toggle-label">Weather Theme</span>
+            <input
+              type="checkbox"
+              id="weatherToggle"
+              role="switch"
+              aria-checked="false"
+              aria-label="Enable weather-based color theme"
+            />
+            <span class="toggle-slider" aria-hidden="true"></span>
+          </label>
+        </div>
+
+        <!-- Settings button -->
+        <button
+          class="settings-btn"
+          id="settingsBtn"
+          aria-label="Weather theme settings"
+          aria-expanded="false"
+          aria-controls="settingsPanel"
+          title="Weather theme settings"
+        >
+          ⚙️
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Settings Panel (slide-out) -->
+  <aside
+    class="settings-panel"
+    id="settingsPanel"
+    role="dialog"
+    aria-label="Weather theme settings"
+    aria-modal="true"
+    hidden
+  >
+    <div class="settings-panel-inner">
+      <div class="settings-header">
+        <h2>Weather Theme Settings</h2>
+        <button class="close-btn" id="closeSettingsBtn" aria-label="Close settings">&times;</button>
+      </div>
+
+      <div class="settings-body">
+        <!-- Global Toggle -->
+        <section class="settings-section">
+          <h3>Global Setting</h3>
+          <label class="toggle-switch" for="globalWeatherToggle">
+            <span class="toggle-label">Enable weather-based themes</span>
+            <input
+              type="checkbox"
+              id="globalWeatherToggle"
+              role="switch"
+              aria-checked="false"
+            />
+            <span class="toggle-slider" aria-hidden="true"></span>
+          </label>
+          <p class="settings-hint">When enabled, task cards will be styled based on your local weather conditions.</p>
+        </section>
+
+        <!-- Location Settings -->
+        <section class="settings-section">
+          <h3>Location</h3>
+          <div class="location-controls">
+            <button class="btn btn-secondary" id="detectLocationBtn" aria-label="Detect my location automatically">
+              📍 Detect My Location
+            </button>
+            <div class="location-status" id="locationStatus" aria-live="polite"></div>
+
+            <div class="manual-location">
+              <label for="manualLocationInput">Or enter location manually:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  id="manualLocationInput"
+                  placeholder="e.g., New York, London, Tokyo"
+                  aria-label="Enter city name for weather data"
+                />
+                <button class="btn btn-primary" id="setLocationBtn">Set</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Weather Preview -->
+        <section class="settings-section">
+          <h3>Current Weather</h3>
+          <div class="weather-preview" id="weatherPreview">
+            <p class="no-data">No weather data available. Enable the toggle and set a location to see weather info.</p>
+          </div>
+        </section>
+
+        <!-- Theme Mapping Reference -->
+        <section class="settings-section">
+          <h3>Theme Mapping</h3>
+          <div class="theme-mapping-grid" id="themeMappingGrid">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- Per-Project Overrides -->
+        <section class="settings-section">
+          <h3>Project Overrides</h3>
+          <p class="settings-hint">Disable weather themes for specific projects or boards.</p>
+          <div class="project-overrides" id="projectOverrides">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- Privacy Info -->
+        <section class="settings-section">
+          <h3>Privacy &amp; Data</h3>
+          <div class="privacy-info">
+            <ul>
+              <li><strong>Location data</strong> is stored only in your browser's local storage and is never sent to our servers.</li>
+              <li>Weather data is fetched from <strong>Open-Meteo</strong> (free, no API key required, privacy-friendly).</li>
+              <li>Only <strong>city-level coordinates</strong> are used — precise GPS data is rounded before any API call.</li>
+              <li>Cached weather data is retained for <strong>up to 30 minutes</strong> and then automatically refreshed.</li>
+              <li>You can <strong>clear all stored data</strong> at any time using the button below.</li>
+            </ul>
+            <button class="btn btn-danger" id="clearDataBtn">Clear All Weather Data</button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Overlay for settings panel -->
+  <div class="settings-overlay" id="settingsOverlay" hidden></div>
+
+  <!-- Error/Status banner -->
+  <div class="status-banner" id="statusBanner" role="alert" hidden>
+    <span class="status-message" id="statusMessage"></span>
+    <button class="status-close" id="statusClose" aria-label="Dismiss">&times;</button>
+  </div>
+
+  <!-- Main Task View -->
+  <main class="task-view" id="taskView">
+    <div class="task-view-header">
+      <h2>My Tasks</h2>
+      <div class="task-view-controls">
+        <label for="projectFilter">Project:</label>
+        <select id="projectFilter" aria-label="Filter by project">
+          <option value="all">All Projects</option>
+          <option value="proj-alpha">Project Alpha</option>
+          <option value="proj-beta">Project Beta</option>
+          <option value="proj-gamma">Project Gamma</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="task-board" id="taskBoard">
+      <!-- Task columns populated by JS -->
+    </div>
+  </main>
+
+  <script src="js/weather-conditions.js"></script>
+  <script src="js/preferences.js"></script>
+  <script src="js/weather-service.js"></script>
+  <script src="js/theme-manager.js"></script>
+  <script src="js/ui-controller.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
