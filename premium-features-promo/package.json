@@ -1,0 +1,14 @@
+{
+  "name": "premium-features-promo",
+  "version": "1.0.0",
+  "description": "Landing page for promoting premium features (Roadmaps & Flexible Hierarchy) using the Impossible Alone brand theme",
+  "private": true,
+  "scripts": {
+    "test": "jest --verbose",
+    "test:coverage": "jest --verbose --coverage"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}

@@ -1,0 +1,302 @@
+/* ============================================================
+   Impossible Alone — Brand Theme
+   Premium Features Promo Landing Page
+   ============================================================ */
+
+/* ----- CSS Custom Properties (Design Tokens) --------------- */
+:root {
+  /* Primary palette */
+  --ia-blue-900: #0C2340;
+  --ia-blue-700: #0052CC;
+  --ia-blue-600: #0065FF;
+  --ia-blue-500: #2684FF;
+  --ia-blue-100: #DEEBFF;
+  --ia-blue-50:  #F4F8FF;
+
+  /* Accent / CTA */
+  --ia-teal-600: #00A3BF;
+  --ia-teal-500: #00B8D9;
+  --ia-teal-100: #E6FCFF;
+
+  /* Neutrals */
+  --ia-neutral-900: #172B4D;
+  --ia-neutral-700: #253858;
+  --ia-neutral-500: #5E6C84;
+  --ia-neutral-300: #A5ADBA;
+  --ia-neutral-200: #C1C7D0;
+  --ia-neutral-100: #EBECF0;
+  --ia-neutral-50:  #FAFBFC;
+  --ia-white:       #FFFFFF;
+
+  /* Semantic */
+  --ia-success: #36B37E;
+  --ia-warning: #FFAB00;
+
+  /* Typography */
+  --font-heading: 'Charlie Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body:    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+
+  /* Spacing scale (4px base) */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+  --space-4xl: 96px;
+
+  /* Layout */
+  --max-width: 1200px;
+  --border-radius: 8px;
+  --border-radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(23, 43, 77, .1);
+  --shadow-md: 0 4px 12px rgba(23, 43, 77, .12);
+  --shadow-lg: 0 8px 24px rgba(23, 43, 77, .15);
+
+  /* Transitions */
+  --transition-fast: 150ms ease-in-out;
+  --transition-base: 250ms ease-in-out;
+}
+
+/* ----- Reset & Base ---------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--ia-neutral-900);
+  background-color: var(--ia-white);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: var(--ia-blue-600);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--ia-blue-700);
+  text-decoration: underline;
+}
+
+/* ----- Typography ------------------------------------------ */
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--ia-neutral-900);
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.25rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); }
+h3 { font-size: clamp(1.125rem, 2.5vw, 1.5rem); }
+h4 { font-size: 1.125rem; }
+
+p {
+  max-width: 68ch;
+}
+
+.text-center { text-align: center; }
+.text-muted  { color: var(--ia-neutral-500); }
+
+/* ----- Layout Utilities ------------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+}
+
+.section {
+  padding: var(--space-4xl) 0;
+}
+
+.section--alt {
+  background-color: var(--ia-blue-50);
+}
+
+.section--dark {
+  background-color: var(--ia-blue-900);
+  color: var(--ia-white);
+}
+
+.section--dark h2,
+.section--dark h3,
+.section--dark h4 {
+  color: var(--ia-white);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.grid--2 { grid-template-columns: 1fr; }
+.grid--3 { grid-template-columns: 1fr; }
+
+@media (min-width: 768px) {
+  .grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .grid--3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1024px) {
+  .grid--3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ----- Buttons --------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--ia-blue-500);
+  outline-offset: 2px;
+}
+
+.btn--primary {
+  background: var(--ia-blue-600);
+  color: var(--ia-white);
+}
+
+.btn--primary:hover {
+  background: var(--ia-blue-700);
+  color: var(--ia-white);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--ia-blue-600);
+  border-color: var(--ia-blue-600);
+}
+
+.btn--secondary:hover {
+  background: var(--ia-blue-100);
+  color: var(--ia-blue-700);
+  text-decoration: none;
+}
+
+.btn--white {
+  background: var(--ia-white);
+  color: var(--ia-blue-700);
+}
+
+.btn--white:hover {
+  background: var(--ia-blue-50);
+  color: var(--ia-blue-900);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+}
+
+.btn--ghost-white {
+  background: transparent;
+  color: var(--ia-white);
+  border-color: var(--ia-white);
+}
+
+.btn--ghost-white:hover {
+  background: rgba(255,255,255,.12);
+  text-decoration: none;
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+}
+
+/* ----- Cards ----------------------------------------------- */
+.card {
+  background: var(--ia-white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.card__icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-md);
+  color: var(--ia-blue-600);
+}
+
+.card__title {
+  margin-bottom: var(--space-sm);
+}
+
+.card__text {
+  color: var(--ia-neutral-500);
+  font-size: 0.9375rem;
+}
+
+/* ----- Skip Link ------------------------------------------- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-md);
+  background: var(--ia-blue-600);
+  color: var(--ia-white);
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--border-radius);
+  z-index: 1000;
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  top: var(--space-md);
+}
+
+/* ----- Visibility / SR ------------------------------------- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
