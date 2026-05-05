@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather-Based Theme Toggle — Task View</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/accessibility.css">
+
+  <!-- App Entry Point -->
+  <script type="module" src="js/app.js"></script>
+</head>
+<body>
+
+  <div class="page-container">
+
+    <!-- ================================================================
+         Page Header with Toggle
+         ================================================================ -->
+    <header class="page-header">
+      <h1 class="page-header__title">Task View</h1>
+      <p class="page-header__subtitle">
+        Personalize your task view with weather-based color themes
+      </p>
+
+      <!-- Weather Theme Toggle (default: off) -->
+      <div id="weather-toggle"
+           class="toggle-switch"
+           role="switch"
+           aria-checked="false"
+           aria-label="Weather-based color theme"
+           tabindex="0">
+        <span class="toggle-switch__track" aria-hidden="true">
+          <span class="toggle-switch__thumb"></span>
+        </span>
+        <span class="toggle-switch__label">Weather Theme</span>
+        <span class="toggle-status-text" aria-hidden="true">Off</span>
+      </div>
+    </header>
+
+    <!-- ================================================================
+         Weather Display — shows icon + text label (non-color cue)
+         ================================================================ -->
+    <section id="weather-display"
+             class="weather-display"
+             role="region"
+             aria-label="Current weather conditions">
+    </section>
+
+    <!-- ================================================================
+         Location Settings Panel (hidden when toggle is off)
+         ================================================================ -->
+    <section id="location-panel"
+             class="panel"
+             hidden
+             aria-label="Location settings">
+      <h2 class="panel__title">
+        <span class="panel__title-icon" aria-hidden="true">📍</span>
+        Location Settings
+      </h2>
+      <p class="panel__description">
+        Choose how we determine your local weather. Your location is never stored
+        on our servers and is only used to fetch weather data.
+      </p>
+
+      <div class="location-controls">
+        <div class="location-controls__group">
+          <label class="sr-only" for="location-auto-btn">Auto-detect my location</label>
+          <button id="location-auto-btn"
+                  class="btn"
+                  type="button"
+                  aria-describedby="location-status">
+            📍 Use My Location
+          </button>
+        </div>
+
+        <div class="location-controls__or" aria-hidden="true">or</div>
+
+        <div class="location-controls__group">
+          <label for="location-city-input" class="sr-only">Enter city name</label>
+          <div style="display: flex; gap: 0.5rem;">
+            <input id="location-city-input"
+                   class="input"
+                   type="text"
+                   placeholder="Enter city name…"
+                   autocomplete="off"
+                   aria-describedby="location-status">
+            <button id="location-city-btn"
+                    class="btn btn--secondary"
+                    type="button">
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <p id="location-status" class="location-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- ================================================================
+         Demo Task Cards
+         Each card includes a .weather-status-indicator (icon + label)
+         as the primary non-color cue for weather state.
+         ================================================================ -->
+    <section aria-label="Task list">
+      <h2 class="panel__title" style="margin-bottom: 1rem;">
+        <span class="panel__title-icon" aria-hidden="true">📋</span>
+        Tasks
+      </h2>
+
+      <div class="task-list">
+
+        <div class="task-card">
+          <div class="task-card__header">
+            <span class="task-card__title">Design new landing page layout</span>
+            <span class="task-card__priority">
+              <span aria-hidden="true">🔴</span> High
+            </span>
+          </div>
+          <p class="task-card__meta">
+            Assigned to Alex · Due May 15 · Design
+          </p>
+        </div>
+
+        <div class="task-card">
+          <div class="task-card__header">
+            <span class="task-card__title">Implement user authentication flow</span>
+            <span class="task-card__priority">
+              <span aria-hidden="true">🟡</span> Medium
+            </span>
+          </div>
+          <p class="task-card__meta">
+            Assigned to Jordan · Due May 20 · Engineering
+          </p>
+        </div>
+
+        <div class="task-card">
+          <div class="task-card__header">
+            <span class="task-card__title">Write API documentation</span>
+            <span class="task-card__priority">
+              <span aria-hidden="true">🟢</span> Low
+            </span>
+          </div>
+          <p class="task-card__meta">
+            Assigned to Sam · Due May 25 · Documentation
+          </p>
+        </div>
+
+        <div class="task-card">
+          <div class="task-card__header">
+            <span class="task-card__title">Optimize database queries</span>
+            <span class="task-card__priority">
+              <span aria-hidden="true">🔴</span> High
+            </span>
+          </div>
+          <p class="task-card__meta">
+            Assigned to Taylor · Due May 12 · Engineering
+          </p>
+        </div>
+
+        <div class="task-card">
+          <div class="task-card__header">
+            <span class="task-card__title">Create onboarding tutorial</span>
+            <span class="task-card__priority">
+              <span aria-hidden="true">🟡</span> Medium
+            </span>
+          </div>
+          <p class="task-card__meta">
+            Assigned to Morgan · Due May 28 · Product
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================
+         Settings Panel (per-project/board overrides)
+         ================================================================ -->
+    <section id="settings-panel"
+             class="panel"
+             hidden
+             aria-label="Theme override settings"
+             style="margin-top: 1.5rem;">
+      <h2 class="panel__title">
+        <span class="panel__title-icon" aria-hidden="true">⚙️</span>
+        Override Settings
+      </h2>
+      <p class="panel__description">
+        Override the weather theme for specific projects or boards. When disabled
+        for a project, that project will use the standard theme regardless of
+        the global toggle.
+      </p>
+      <p class="panel__description" style="font-style: italic;">
+        Per-project and per-board overrides are available when this feature is
+        integrated with your project management tool.
+      </p>
+    </section>
+
+    <!-- ================================================================
+         Theme Preview — shows all available themes with icon + label
+         ================================================================ -->
+    <section aria-label="Available weather themes" style="margin-top: 1.5rem;">
+      <h2 class="panel__title" style="margin-bottom: 1rem;">
+        <span class="panel__title-icon" aria-hidden="true">🎨</span>
+        Available Themes
+      </h2>
+      <p class="panel__description" style="margin-bottom: 1rem;">
+        Each weather condition maps to a unique theme identified by both
+        <strong>color</strong> and <strong>icon + text label</strong> — ensuring
+        accessibility for all users, including those with color vision deficiencies.
+      </p>
+      <div id="theme-preview-grid"
+           class="theme-preview-grid"
+           role="list"
+           aria-label="Weather theme previews">
+      </div>
+    </section>
+
+    <!-- ================================================================
+         Privacy Information (collapsible)
+         ================================================================ -->
+    <details class="privacy-panel" style="margin-top: 1.5rem;">
+      <summary>🔒 Privacy &amp; Data Handling</summary>
+      <div style="padding-top: 0.5rem;">
+        <p>We take your privacy seriously. Here's how we handle your data:</p>
+        <ul>
+          <li><strong>Location data</strong> is coarsened to ~11 km precision before use.</li>
+          <li><strong>No server storage</strong> — all preferences are saved in your browser's local storage only.</li>
+          <li><strong>Weather data</strong> is fetched from <a href="https://open-meteo.com" target="_blank" rel="noopener noreferrer">Open-Meteo</a> (free, open-source, no API key required, no tracking).</li>
+          <li><strong>All data is cleared</strong> when you disable the weather theme.</li>
+          <li><strong>No data is shared</strong> with third parties beyond the weather API request.</li>
+          <li><strong>Cached data</strong> expires after 30 minutes and is stored locally only.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- ================================================================
+         Accessibility Statement
+         ================================================================ -->
+    <footer style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--wt-border);">
+      <details class="privacy-panel">
+        <summary>♿ Accessibility Statement</summary>
+        <div style="padding-top: 0.5rem;">
+          <p>This feature is designed with accessibility as a core requirement:</p>
+          <ul>
+            <li><strong>Non-color cues:</strong> Weather state is communicated via icons and text labels, never by color alone (WCAG 1.4.1).</li>
+            <li><strong>High contrast:</strong> All text meets WCAG AA contrast requirements (minimum 4.5:1 ratio).</li>
+            <li><strong>Color-blind safe:</strong> Themes are distinguishable under protanopia, deuteranopia, and tritanopia.</li>
+            <li><strong>Keyboard accessible:</strong> All controls are fully operable via keyboard (WCAG 2.1.1).</li>
+            <li><strong>Screen reader support:</strong> ARIA roles, labels, and live regions provide full screen reader compatibility.</li>
+            <li><strong>Reduced motion:</strong> Animations are disabled when <code>prefers-reduced-motion</code> is set.</li>
+            <li><strong>High contrast mode:</strong> Full support for Windows High Contrast and <code>forced-colors</code> mode.</li>
+            <li><strong>Touch targets:</strong> All interactive elements meet the 44×44px minimum target size (WCAG 2.5.8).</li>
+          </ul>
+        </div>
+      </details>
+    </footer>
+
+  </div>
+
+  <!-- Screen reader announcer (live region) -->
+  <div id="sr-announcer"
+       role="status"
+       aria-live="assertive"
+       aria-atomic="true"
+       class="sr-only">
+  </div>
+
+</body>
+</html>
