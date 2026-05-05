@@ -1,0 +1,190 @@
+/*
+ * Per-Weather Theme Decorations
+ *
+ * These styles apply visual decorations (backgrounds, borders, patterns)
+ * based on the [data-weather-theme] attribute set by the theme-manager.
+ *
+ * IMPORTANT: Every visual treatment here is SUPPLEMENTED by a non-color cue
+ * (the .weather-status-indicator badge with icon + text label).
+ * Color is NEVER the sole means of conveying weather state.
+ */
+
+/* ========================================================================
+   Theme Transitions
+   ======================================================================== */
+
+[data-weather-theme] body,
+[data-weather-theme] .task-card,
+[data-weather-theme] .panel,
+[data-weather-theme] .weather-display__card {
+  transition: background-color 0.4s ease, border-color 0.4s ease, color 0.3s ease;
+}
+
+/* ========================================================================
+   Clear ☀️
+   Warm gold tones — distinct lightness: very light background
+   ======================================================================== */
+
+[data-weather-theme="clear"] .task-card {
+  background: #FFFDF5;
+  border-left-color: #7A5A00;
+}
+
+[data-weather-theme="clear"] .page-header {
+  border-bottom-color: #C49A10;
+}
+
+/* ========================================================================
+   Cloudy ☁️
+   Cool grey tones — distinct lightness: medium-light background
+   ======================================================================== */
+
+[data-weather-theme="cloudy"] .task-card {
+  background: #F7F8FA;
+  border-left-color: #5A6578;
+}
+
+[data-weather-theme="cloudy"] .page-header {
+  border-bottom-color: #8A92A3;
+}
+
+/* ========================================================================
+   Foggy 🌫️
+   Warm taupe tones — distinct lightness: soft warm background
+   ======================================================================== */
+
+[data-weather-theme="foggy"] .task-card {
+  background: #FAF8F5;
+  border-left-color: #7A7268;
+}
+
+[data-weather-theme="foggy"] .page-header {
+  border-bottom-color: #9E968B;
+}
+
+/* ========================================================================
+   Rainy 🌧️
+   Blue tones — distinct lightness: cool-tinted background
+   ======================================================================== */
+
+[data-weather-theme="rainy"] .task-card {
+  background: #F3F8FE;
+  border-left-color: #2B6CB0;
+}
+
+[data-weather-theme="rainy"] .page-header {
+  border-bottom-color: #5A9BD5;
+}
+
+/* ========================================================================
+   Snowy ❄️
+   Ice-blue tones — distinct lightness: very pale cool background
+   ======================================================================== */
+
+[data-weather-theme="snowy"] .task-card {
+  background: #F7FAFF;
+  border-left-color: #4878A8;
+}
+
+[data-weather-theme="snowy"] .page-header {
+  border-bottom-color: #7BADD4;
+}
+
+/* ========================================================================
+   Stormy ⛈️
+   Purple-grey tones — distinct lightness: muted purple background
+   ======================================================================== */
+
+[data-weather-theme="stormy"] .task-card {
+  background: #F5F2FA;
+  border-left-color: #6B4C9A;
+}
+
+[data-weather-theme="stormy"] .page-header {
+  border-bottom-color: #8B72B0;
+}
+
+/* ========================================================================
+   Extreme Heat 🔥
+   Burnt orange tones — distinct lightness: warm peach background
+   ======================================================================== */
+
+[data-weather-theme="extreme_heat"] .task-card {
+  background: #FFF7F2;
+  border-left-color: #C44B00;
+}
+
+[data-weather-theme="extreme_heat"] .page-header {
+  border-bottom-color: #E87030;
+}
+
+/* ========================================================================
+   Extreme Cold 🥶
+   Dark teal tones — distinct lightness: pale cyan background
+   ======================================================================== */
+
+[data-weather-theme="extreme_cold"] .task-card {
+  background: #F2F9FC;
+  border-left-color: #1B7A8A;
+}
+
+[data-weather-theme="extreme_cold"] .page-header {
+  border-bottom-color: #4AA0B0;
+}
+
+/* ========================================================================
+   Windy 💨
+   Sage/green tones — distinct lightness: pale mint background
+   ======================================================================== */
+
+[data-weather-theme="windy"] .task-card {
+  background: #F4FAF6;
+  border-left-color: #3A7D5C;
+}
+
+[data-weather-theme="windy"] .page-header {
+  border-bottom-color: #6AAD88;
+}
+
+/* ========================================================================
+   Unknown / Default 🌡️
+   Neutral grey — fallback
+   ======================================================================== */
+
+[data-weather-theme="unknown"] .task-card {
+  background: #FAFAFA;
+  border-left-color: #555555;
+}
+
+/* ========================================================================
+   Non-color Cue Emphasis
+   When a theme is active, ensure the weather badge is prominently visible.
+   This guarantees information is available beyond color alone.
+   ======================================================================== */
+
+[data-weather-theme] .weather-status-indicator {
+  display: inline-flex;
+  /* Badge is always visible when theme is active */
+}
+
+[data-weather-theme] .weather-display__badge {
+  display: inline-flex;
+  /* Condition badge with icon + text is always shown */
+}
+
+/* ========================================================================
+   Forced Colors Override
+   In high contrast mode, ignore decorative theme colors and use
+   system colors to maintain readability.
+   ======================================================================== */
+
+@media (forced-colors: active) {
+  [data-weather-theme] .task-card {
+    background: Canvas;
+    border-left-color: Highlight;
+  }
+
+  [data-weather-theme] .page-header {
+    border-bottom-color: ButtonText;
+  }
+}
