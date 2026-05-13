@@ -1,0 +1,42 @@
+:root {
+  --page-background: #fff7f0;
+  --surface: #ffffff;
+  --surface-strong: #fff1dc;
+  --text-primary: #2f1c12;
+  --text-secondary: #6f5647;
+  --accent: #f47242;
+  --accent-dark: #d95f2f;
+  --accent-soft: #ffe1cf;
+  --border: #efcfbf;
+  --shadow: 0 18px 45px rgba(115, 54, 18, 0.12);
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100%;
+  margin: 0;
+  background: linear-gradient(180deg, #fff7f0 0%, #fffdf8 100%);
+  color: var(--text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
